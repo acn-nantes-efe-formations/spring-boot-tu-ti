@@ -38,13 +38,19 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
     @InjectMocks
     private PersonneManager manager;
+//
+//    public PersonneManagerUnitTest() {
+//        this.daoMock = Mockito.mock(PersonneDao.class);
+//        this.pMapper = Mockito.mock(PersonneMapper.class);
+//        this.manager = new PersonneManager(daoMock, pMapper);
+//    }
 
     @Captor
     private ArgumentCaptor<Personne> captor;
 
     @Test
     void testAjoutNull(){
-        PersonneException e = Assertions.assertThrows(PersonneException.class, () -> manager.ajout(null));
+        PersonneException e = assertThrows(PersonneException.class, () -> manager.ajout(null));
         Assertions.assertEquals("Personne nul", e.getMessage());
     }
 
@@ -57,7 +63,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
         Assertions.assertDoesNotThrow(() -> manager.ajout(dto));
 
         Mockito.verify(daoMock).save(captor.capture());
-        Assertions.assertSame(p, captor.getValue());
+        assertSame(p, captor.getValue());
     }
 
     @Test
@@ -69,7 +75,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
     @Test
     void testTrouverAvecData(){
-        Personne p = new Personne(0, "Lepetit", "Joe", 44);
+        Personne p = new Personne(5, "Lepetit", "Joe", 44);
         PersonneResponseDto dto = new PersonneResponseDto(5, "Lepetit", "Joe", 44);
         Optional<Personne> optPers = Optional.of(p);
         Mockito.when(daoMock.findById(Mockito.anyInt())).thenReturn(optPers);

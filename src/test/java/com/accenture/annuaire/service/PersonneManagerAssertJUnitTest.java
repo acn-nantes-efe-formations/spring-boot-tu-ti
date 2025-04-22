@@ -69,7 +69,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
     @Test
     void testTrouverAvecData(){
-        Personne p = new Personne(0, "Lepetit", "Joe", 44);
+        Personne p = new Personne(5, "Lepetit", "Joe", 44);
         PersonneResponseDto dto = new PersonneResponseDto(5, "Lepetit", "Joe", 44);
         Optional<Personne> optPers = Optional.of(p);
         Mockito.when(daoMock.findById(Mockito.anyInt())).thenReturn(optPers);
